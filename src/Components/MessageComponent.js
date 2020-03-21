@@ -111,7 +111,6 @@ export default function MessageComponent() {
                                 date.setMilliseconds(date.getMilliseconds() + 100);
                                 lastMessageDate.setTime(date);
                                 lastMessageDate.setSeconds(date.getSeconds());
-                                console.log(lastMessageDate);
                             });
                         }
                     }
@@ -145,7 +144,7 @@ export default function MessageComponent() {
                                             {message.username}
                                         </Typography>
 
-                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h8"
+                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
                                                     component="h2">
                                             {message.content}
                                         </Typography>
@@ -167,7 +166,7 @@ export default function MessageComponent() {
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             {message.username}
                                         </Typography>
-                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h8"
+                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
                                                     component="h2">
                                             {message.content}
                                         </Typography>
