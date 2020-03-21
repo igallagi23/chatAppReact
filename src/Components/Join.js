@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import { useHistory } from 'react-router-dom'
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
@@ -36,42 +36,41 @@ export default function Join() {
     const classes = useStyles();
     const [username, setUsername] = useState('');
 
-
     const loginFunction = async (event) => {
-        if(username.length<6||!(username[0].toLowerCase() != username[0].toUpperCase()))
-        {
-            console.log(username);
-            alert("Username Must be 6 letters, And must start with a letter!")
+        //if login fail try again
+        if (username.length < 6 || !(username[0].toLowerCase() != username[0].toUpperCase())) {
+            alert("Username Must be 6 letters, And must start with a letter!");
             setUsername('');
-            return ;
+            return;
         }
         event.preventDefault();
         const body1 = JSON.stringify({
             username: username
         });
         try {
-            const response = await fetch(App.serverIp+'/login',
+            const response = await fetch(App.serverIp + '/login',
                 {
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     method: 'POST',
-                    body:body1
+                    body: body1
                 });
-            console.log(response)
-            if(response.ok===true){
+            console.log(response);
+            if (response.ok === true) {
                 localStorage.setItem('username', username);
-                const res= (await response.json()).body;
+                const res = (await response.json()).body;
                 localStorage.setItem('userID', res.user_id);
-                history.push('/chat',{username:username})   ;
+                history.push('/chat', {username: username});
             }
-            if (response.status===409){
+            //if user taken alert and suggest same username + rand num
+            if (response.status === 409) {
                 alert("Username Exist,Please choose another one");
-                setUsername(username+(Math.floor(Math.random() * 100)).toString()  );
+                setUsername(username + (Math.floor(Math.random() * 100)).toString());
             }
         } catch (e) {
             console.log(e);
-            alert("error");
+            alert("Server Error");
         }
     };
 

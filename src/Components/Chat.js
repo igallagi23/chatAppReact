@@ -6,8 +6,6 @@ import LeftGridComponent from "./LeftGridComponent";
 import MessageComponent from "./MessageComponent";
 import InputBox from "./InputBox";
 import Background from "../images/background.jpeg"
-import Paper from "@material-ui/core/Paper";
-
 
 const useStyles = makeStyles(() => ({
         root: {
@@ -17,7 +15,7 @@ const useStyles = makeStyles(() => ({
             width: '100%',
             overflow: 'hidden',
             background: `url(${Background})`,
-            backgroundSize:'repeat'
+            backgroundSize: 'repeat'
         },
         leftGrid: {
             textAlign: 'left',
@@ -30,16 +28,23 @@ const useStyles = makeStyles(() => ({
     }
 ));
 
+//chat page component(includes MessageComponent, InputBox)
 export default function Chat() {
     const classes = useStyles();
     let history = useHistory();
 
+    //if window closed then send logout to server
     useEffect(() => {
-        if (localStorage.getItem('userID') == 0) history.push('/');
         window.addEventListener('beforeunload', LeftGridComponent.logoutFunction);
         return () => {
             window.removeEventListener('beforeunload', LeftGridComponent.logoutFunction);
         }
+    });
+
+    //if not connected navigate back to home and
+    useEffect(() => {
+        if (localStorage.getItem('userID') == 0) history.push('/');
+
     }, [history]);
 
     return (
@@ -49,7 +54,7 @@ export default function Chat() {
                 <LeftGridComponent></LeftGridComponent>
             </Grid>
             <Grid className={classes.rightGrid} item xs={10}>
-                <MessageComponent ></MessageComponent>
+                <MessageComponent></MessageComponent>
                 <InputBox></InputBox>
             </Grid>
         </Grid>

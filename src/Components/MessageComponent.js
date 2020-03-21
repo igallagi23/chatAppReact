@@ -8,7 +8,7 @@ import List from "@material-ui/core/List";
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import App from "../App";
-import { animateScroll } from "react-scroll";
+import {animateScroll} from "react-scroll";
 
 const useStyles = makeStyles(() => ({
         messagesList: {
@@ -78,9 +78,10 @@ export default function MessageComponent() {
                     let messagesList = await response.json();
                     setMessages(messagesList.body.reverse());
                     let lastM = messagesList.body[messagesList.body.length - 1];
-                    let date = new Date(lastM.createdAt);
-                    date.setHours(date.getHours()+2);
+                    let date = Date(lastM.createdAt);
+                    date.setHours(date.getHours());
                     lastMessageDate.setTime(date);
+                    console.log(lastMessageDate)
                 }
             } catch (e) {
                 console.log(e);
@@ -109,7 +110,7 @@ export default function MessageComponent() {
                                 setMessages(messages => [...messages, message]);
 
                                 let date = new Date(message.createdAt);
-                                date.setMilliseconds(date.getMilliseconds() + 100);
+                                date.setMilliseconds(date.getMilliseconds() + 500);
                                 lastMessageDate.setTime(date);
                                 lastMessageDate.setSeconds(date.getSeconds());
                             });
@@ -119,12 +120,13 @@ export default function MessageComponent() {
                     console.log(e);
                 }
             })();
-        }, 500);
+        }, App.intervalTime);
         return () => clearInterval(intervalId); //This is important
     }, []);
 
-    const dateToTimeStringConverter= (date)=>{
-        let dateTest=new Date(date);
+    const dateToTimeStringConverter = (date) => {
+        let dateTest = new Date(date);
+        dateTest.setHours(dateTest.getHours() + 2);
         return (dateTest.toISOString().split('T')[1].split('.')[0]);
     };
 
@@ -137,42 +139,43 @@ export default function MessageComponent() {
                         <ListItem style={{width: '80%', float: 'right'}} key={message.message_id}>
                             {/*text align works only like this for me.*/}
                             <Card className={classes.userMessages}>
-                                    <CardContent>
-                                        <Avatar
-                                            className={classes.userAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
-                                        <Typography style={{width:'300px'}} variant="body2" color="textSecondary" component="p">
-                                            {message.username}
-                                        </Typography>
+                                <CardContent>
+                                    <Avatar
+                                        className={classes.userAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
+                                    <Typography style={{width: '300px'}} variant="body2" color="textSecondary"
+                                                component="p">
+                                        {message.username}
+                                    </Typography>
 
-                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
-                                                    component="h2">
-                                            {message.content}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            {dateToTimeStringConverter(message.createdAt)}
-                                        </Typography>
-                                    </CardContent>
+                                    <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
+                                                component="h2">
+                                        {message.content}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {dateToTimeStringConverter(message.createdAt)}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         </ListItem>
                     ) :
                     (
                         <ListItem key={message.message_id}>
                             <Card className={classes.otherMessages}>
-                                    <CardContent>
-                                        <Avatar
-                                            className={classes.otherAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            {message.username}
-                                        </Typography>
-                                        <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
-                                                    component="h2">
-                                            {message.content}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            {dateToTimeStringConverter(message.createdAt)}
-                                        </Typography>
+                                <CardContent>
+                                    <Avatar
+                                        className={classes.otherAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {message.username}
+                                    </Typography>
+                                    <Typography style={{marginTop: '15px'}} gutterBottom variant="h6"
+                                                component="h2">
+                                        {message.content}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {dateToTimeStringConverter(message.createdAt)}
+                                    </Typography>
 
-                                    </CardContent>
+                                </CardContent>
                             </Card>
                         </ListItem>
                     )
@@ -183,6 +186,6 @@ export default function MessageComponent() {
 
         </List>
 
-)
+    )
 
 }

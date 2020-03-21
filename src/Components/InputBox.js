@@ -2,10 +2,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Paper from "@material-ui/core/Paper";
-import React, {useRef, useState} from "react";
+import React, { useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import App from "../App";
-import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = makeStyles(() => ({
         textField: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles(() => ({
     }
 ));
 
-
+//send button and textfield
 export default function InputBox() {
     const [textBody, setTextBody] = useState('');
     const classes = useStyles();
@@ -63,6 +62,7 @@ export default function InputBox() {
             alert("error send message");
         }
     };
+    //for enter input
     const onKeyPress = async (e) => {
         if (e.which === 13) {
             await sendMessage(e);

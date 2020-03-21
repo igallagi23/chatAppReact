@@ -9,6 +9,7 @@ import NotFound from "./Components/NotFound";
 function App() {
     // App.serverIp='http://192.168.1.60:5000';//dev
     App.serverIp='http://18.222.99.147:5000';//prod
+    App.intervalTime=500;
     return (
         <Router>
             <Switch>

@@ -48,13 +48,14 @@ const useStyles = makeStyles(() => ({
     }
 ));
 
+//include connection list and hello and logout button
 export default function LeftGridComponent() {
     const [numOfConnectedUsers, setNumOfConnectedUsers] = useState(0);
     const [connectedUsers, setConnectedUsers] = useState([]);
     const classes = useStyles();
     const history = useHistory();
 
-    //add to this object that chat component will use it on close tab
+    //add to this object, that the Chat component will use it on close tab
     LeftGridComponent.logoutFunction = async (event) => {
         event.preventDefault();
         const body1 = JSON.stringify({
@@ -81,6 +82,7 @@ export default function LeftGridComponent() {
         }
     };
 
+    //fetch connected users interval
     useEffect(() => {
         const intervalId = setInterval(() => {
             (async function fetchConnected() {
@@ -102,7 +104,7 @@ export default function LeftGridComponent() {
                     console.log(e);
                 }
             })();
-        }, 500);
+        }, App.intervalTime);
         return () => clearInterval(intervalId); //This is important
     }, []);
 
