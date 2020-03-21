@@ -8,13 +8,13 @@ import List from "@material-ui/core/List";
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import App from "../App";
+import { animateScroll } from "react-scroll";
 
 const useStyles = makeStyles(() => ({
         messagesList: {
             overflow: 'auto',
-            maxHeight: '88%',
+            height: '90%',
         },
-
         userMessages: {
             width: '60%',
             height: '1%',
@@ -22,27 +22,27 @@ const useStyles = makeStyles(() => ({
             justify: "flex-end",
             float: 'right',
             display: 'flex',
-            flex: 1
+            flex: 1,
         },
         otherMessages: {
             background: 'rgb(246,246,246)',
             width: '60%',
-            height: '1%'
+            height: '1%',
         },
 
         otherAvatar: {
             background: 'rgb(163,172,197)',
             float: 'left',
-            height: '5%',
-            width: '5%',
+            height: '7%',
+            width: '4%',
             marginRight: '5px'
         },
         userAvatar: {
             background: 'rgb(246,246,246)',
             color: 'rgb(163,172,197)',
             float: 'left',
-            height: '7%',
-            width: '7%',
+            height: '25%',
+            width: '10%',
             marginRight: '5px',
         }
     }
@@ -57,7 +57,9 @@ export default function MessageComponent() {
 
     //scroll down when new message pops
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({behavior: "smooth"})
+        messagesEndRef.current.scrollIntoView({behavior: "smooth"});
+        const list = document.getElementById("target");
+        list.scrollTop = list.offsetHeight;
     };
     useEffect(scrollToBottom, [messages]);
 
@@ -74,11 +76,10 @@ export default function MessageComponent() {
 
                 if (response.ok === true) {
                     let messagesList = await response.json();
-                    // let datetest = new Date(messagesList.body[0].createdAt);
-                    // console.log(datetest.toISOString().split('T')[1].split('.')[0]);
                     setMessages(messagesList.body.reverse());
                     let lastM = messagesList.body[messagesList.body.length - 1];
                     let date = new Date(lastM.createdAt);
+                    date.setHours(date.getHours()+2);
                     lastMessageDate.setTime(date);
                 }
             } catch (e) {
@@ -128,19 +129,18 @@ export default function MessageComponent() {
     };
 
     return (
-        <List className={classes.messagesList}>
+
+        <List id={"target2"} className={classes.messagesList}>
             {messages.map((message) => (
                 message.user_id == localStorage.getItem("userID") ?
                     (
                         <ListItem style={{width: '80%', float: 'right'}} key={message.message_id}>
                             {/*text align works only like this for me.*/}
                             <Card className={classes.userMessages}>
-                                <CardActionArea>
-
                                     <CardContent>
                                         <Avatar
                                             className={classes.userAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
-                                        <Typography variant="body2" color="textSecondary" component="p">
+                                        <Typography style={{width:'300px'}} variant="body2" color="textSecondary" component="p">
                                             {message.username}
                                         </Typography>
 
@@ -152,14 +152,12 @@ export default function MessageComponent() {
                                             {dateToTimeStringConverter(message.createdAt)}
                                         </Typography>
                                     </CardContent>
-                                </CardActionArea>
                             </Card>
                         </ListItem>
                     ) :
                     (
                         <ListItem key={message.message_id}>
                             <Card className={classes.otherMessages}>
-                                <CardActionArea>
                                     <CardContent>
                                         <Avatar
                                             className={classes.otherAvatar}>{message.username[0].toLocaleUpperCase()}</Avatar>
@@ -175,13 +173,16 @@ export default function MessageComponent() {
                                         </Typography>
 
                                     </CardContent>
-                                </CardActionArea>
                             </Card>
                         </ListItem>
                     )
             ))}
-            <div ref={messagesEndRef}/>
+            <ListItem>
+                <div id={"target"} ref={messagesEndRef}/>
+            </ListItem>
+
         </List>
-    )
+
+)
 
 }

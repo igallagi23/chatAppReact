@@ -7,8 +7,8 @@ import Chat from "./Components/Chat";
 import NotFound from "./Components/NotFound";
 
 function App() {
-    // App.serverIp='http://192.168.1.60:5000';
-    App.serverIp='18.222.99.147:5000';
+    // App.serverIp='http://192.168.1.60:5000';//dev
+    App.serverIp='http://18.222.99.147:5000';//prod
     return (
         <Router>
             <Switch>

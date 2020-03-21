@@ -12,14 +12,15 @@ import {useHistory} from "react-router-dom";
 const useStyles = makeStyles(() => ({
         helloZone: {
             background: 'rgb(211,217,231,0.6)',
-            height: '17%',
+            maxHeight: '25%',
+            minHeight: '20%',
             color:'rgb(56,60,88)',
         },
         connectionList: {
             overflowY: 'scroll',
             scrollBarWidth: 'none',
             scrollBarColor:'green',
-            maxHeight: '83%',
+            maxHeight: '75%',
             background: 'rgb(163,172,197)',
             overflowX: 'hidden',
         },

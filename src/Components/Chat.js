@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import {useHistory} from "react-router-dom";
 import LeftGridComponent from "./LeftGridComponent";
 import MessageComponent from "./MessageComponent";
 import InputBox from "./InputBox";
+import Background from "../images/background.jpeg"
+import Paper from "@material-ui/core/Paper";
 
 
 const useStyles = makeStyles(() => ({
@@ -14,16 +16,16 @@ const useStyles = makeStyles(() => ({
             height: '100%',
             width: '100%',
             overflow: 'hidden',
-            background: 'rgb(211,217,231)'
+            background: `url(${Background})`,
+            backgroundSize:'repeat'
         },
         leftGrid: {
             textAlign: 'left',
-            maxHeight: '88%',
+            height: '100%',
             direction: 'rtl',
         },
         rightGrid: {
-            maxHeight: '90%',
-            marginTop: '0.8%'
+            height: '100%',
         },
     }
 ));
@@ -40,8 +42,6 @@ export default function Chat() {
         }
     }, [history]);
 
-
-
     return (
         <Grid justify="center" container className={classes.root} spacing={1}>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
@@ -49,7 +49,7 @@ export default function Chat() {
                 <LeftGridComponent></LeftGridComponent>
             </Grid>
             <Grid className={classes.rightGrid} item xs={10}>
-                <MessageComponent></MessageComponent>
+                <MessageComponent ></MessageComponent>
                 <InputBox></InputBox>
             </Grid>
         </Grid>

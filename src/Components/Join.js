@@ -58,6 +58,7 @@ export default function Join() {
                     method: 'POST',
                     body:body1
                 });
+            console.log(response)
             if(response.ok===true){
                 localStorage.setItem('username', username);
                 const res= (await response.json()).body;

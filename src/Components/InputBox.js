@@ -2,16 +2,16 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Paper from "@material-ui/core/Paper";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import App from "../App";
+import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = makeStyles(() => ({
         textField: {
             width: '80%',
-            height: '100%',
             marginLeft: '50px',
-            marginTop: '3%',
+            marginTop:'2%'
         },
         inputContainer: {
             background: 'rgb(163,172,197,0.3)',
@@ -68,6 +68,7 @@ export default function InputBox() {
             await sendMessage(e);
         }
     };
+
     return (
         <Paper className={classes.inputContainer} elevation={0}>
             <TextField onKeyPress={onKeyPress} className={classes.textField} value={textBody}
